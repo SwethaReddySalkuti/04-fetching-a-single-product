@@ -1,0 +1,47 @@
+<%- include('./includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/product.css">
+    </head>
+
+    <body>
+        <%- include('./includes/navigation.ejs') %>
+            <main>
+        <form class="product-form" action="/" method="POST">
+            <div class="form-control">
+                <label for="amount">Amount</label>
+                <input type="number" name="amount" id="amount">
+            </div>
+            <div class="form-control">
+                <label for="description">Description</label>
+                <input type="text" name="description" id="description" rows="5" >
+            </div>
+            <button class="btn" type="submit">Add Expense </button>
+        </form>
+    </main>
+
+            <main>
+                <% if (expenses.length > 0) { %>
+                    <div class="grid">
+                        <% for (let expense of expenses) { %>
+                            <article class="card product-item">
+                                <header class="card__header">
+                                    <h1 class="product__title">
+                                        <%= expense.amount %>
+                                    </h1>
+                                </header>
+                                <div class="card__content">
+                                    <p class="product__description">
+                                        <%= expense.description %>
+                                    </p>
+                                </div>
+                                <form action="/delete-expense" method="POST">
+                                    <input type="hidden" value="<%= expense.id %>" name="expenseId" id="expenseId">
+                                    <button class="btn" type="submit">Delete</button>
+                                </form>
+                            </article>
+                            <% } %>
+                    </div>
+                    <% } else { %>
+                        <h1>No Expenses Found!</h1>
+                        <% } %>
+            </main>
+            <%- include('./includes/end.ejs') %>
