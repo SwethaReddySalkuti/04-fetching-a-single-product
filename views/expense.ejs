@@ -1,47 +1,115 @@
-<%- include('./includes/head.ejs') %>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%= pageTitle %></title>
+    <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/product.css">
     </head>
 
     <body>
-        <%- include('./includes/navigation.ejs') %>
+        <div class="backdrop"></div>
+<header class="main-header">
+    <nav class="main-header__nav">
+        <ul class="main-header__item-list">
+            <li class="main-header__item">
+                <a class="<%= path === '/' ? 'active' : '' %>" href="/">Restaurant App</a>
+            </li>
+            
+            
+        </ul>
+    </nav>
+</header>
+
+<nav class="mobile-nav">
+        <ul class="mobile-nav__item-list">
+                <li class="mobile-nav__item">
+                    <a class="<%= path === '/' ? 'active' : '' %>" href="/">Order List</a>
+                </li>
+            
+            </ul>
+</nav>
             <main>
         <form class="product-form" action="/" method="POST">
             <div class="form-control">
-                <label for="amount">Amount</label>
+                <label for="amount">Choose Price</label>
                 <input type="number" name="amount" id="amount">
             </div>
             <div class="form-control">
-                <label for="description">Description</label>
+                <label for="description">Choose Dish</label>
                 <input type="text" name="description" id="description" rows="5" >
             </div>
-            <button class="btn" type="submit">Add Expense </button>
+            <div>
+
+            <label for="table">Choose a Table:</label>
+            <select name="table" id="table">
+                <option value="table1">Table 1</option>
+                <option value="table2">Table 2</option>
+                <option value="table3">Table 3</option>
+            </select>
+            </div>
+            <button class="btn" type="submit">Add Order </button>
         </form>
     </main>
 
             <main>
                 <% if (expenses.length > 0) { %>
                     <div class="grid">
+                        <h4>Table 1 Orders :</h4>
                         <% for (let expense of expenses) { %>
-                            <article class="card product-item">
-                                <header class="card__header">
-                                    <h1 class="product__title">
-                                        <%= expense.amount %>
-                                    </h1>
-                                </header>
-                                <div class="card__content">
-                                    <p class="product__description">
-                                        <%= expense.description %>
-                                    </p>
+                            <% if(expense.table==='table1') {%>
+
+                                <div>
+                                    <%= expense.amount %>
+                                    <%= expense.description %>
+                                    <%= expense.table %>
+                                    <form action="/delete-expense" method="POST">
+                                        <input type="hidden" value="<%= expense.id %>" name="expenseId" id="expenseId">
+                                        <button class="btn" type="submit">Delete</button>
+                                    </form>
                                 </div>
-                                <form action="/delete-expense" method="POST">
-                                    <input type="hidden" value="<%= expense.id %>" name="expenseId" id="expenseId">
-                                    <button class="btn" type="submit">Delete</button>
-                                </form>
-                            </article>
+                                       
+                                <% } %>
+                                <% } %>
+                                <h4>Table 2 Orders :</h4>
+                                <% for (let expense of expenses) { %>
+                            <% if(expense.table==='table2') {%>
+                            
+                                <div>
+                                    <%= expense.amount %>
+                                    <%= expense.description %>
+                                    <%= expense.table %>
+                                    <form action="/delete-expense" method="POST">
+                                        <input type="hidden" value="<%= expense.id %>" name="expenseId" id="expenseId">
+                                        <button class="btn" type="submit">Delete</button>
+                                    </form>
+                                </div>
+                            <% } %>
+                            <% } %>
+                            <% for (let expense of expenses) { %>
+                            <% if(expense.table==='table3') {%>
+                                <h4>Table 3 Orders :</h4>
+                                <div>
+                                    <div>
+                                        <%= expense.amount %>
+                                        <%= expense.description %>
+                                        <%= expense.table %>
+                                        <form action="/delete-expense" method="POST">
+                                            <input type="hidden" value="<%= expense.id %>" name="expenseId" id="expenseId">
+                                            <button class="btn" type="submit">Delete</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <% } %>
                             <% } %>
                     </div>
                     <% } else { %>
-                        <h1>No Expenses Found!</h1>
+                        <h1>No Orders Found!</h1>
                         <% } %>
             </main>
-            <%- include('./includes/end.ejs') %>
+        </body>
+
+        </html>

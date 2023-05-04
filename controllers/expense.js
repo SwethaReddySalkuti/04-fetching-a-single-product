@@ -15,7 +15,8 @@ exports.getAddExpense = (req, res, next) => {
 exports.postAddExpense = (req, res, next) => {
   const amount = req.body.amount;
   const description = req.body.description;
-  const expense = new Expense(null, amount,description);
+  const table = req.body.table;
+  const expense = new Expense(null, amount,description,table);
   expense
     .save()
     .then(() => {

@@ -2,25 +2,26 @@ const db = require('../util/database');
 
 
 module.exports = class Expense {
-  constructor(id, amount, description) {
+  constructor(id, amount, description,table) {
     this.id = id;
     this.amount = amount;
     this.description = description;
+    this.table = table;
   }
 
-  save() {
+  save() {  
     return db.execute(
-      'INSERT INTO expenses (amount,description) VALUES (?, ?)',
-      [this.amount, this.description]
+      'INSERT INTO orders (amount,description,table) VALUES (3, 45, table3)',
+      [this.amount, this.description, this.table]
     );
   }
 
   static deleteById(id) {
-    return db.execute('DELETE FROM expenses where expenses.id = ?',[id]);
+    return db.execute('DELETE FROM orders where orders.id = ?',[id]);
   }
 
   static fetchAll() {
-    return db.execute('SELECT * FROM expenses');
+    return db.execute('SELECT * FROM orders');
   }
 
   
