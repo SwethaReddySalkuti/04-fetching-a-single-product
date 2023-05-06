@@ -1,9 +1,9 @@
 const Expense = require('../models/expense');
 exports.getAddExpense = (req, res, next) => {
-  Expense.fetchAll()
-    .then(([rows, fieldData]) => {
+  Expense.findAll()
+    .then((expenses) => {
       res.render('expense', {
-        expenses: rows,
+        expenses: expenses,
         pageTitle: 'All Expenses',
         path: '/'
       });
@@ -15,21 +15,26 @@ exports.getAddExpense = (req, res, next) => {
 exports.postAddExpense = (req, res, next) => {
   const amount = req.body.amount;
   const description = req.body.description;
-  const table = req.body.table;
-  const expense = new Expense(null, amount,description,table);
-  expense
-    .save()
-    .then(() => {
-      res.redirect('/');
-    })
-    .catch(err => console.log(err));
+  const category = req.body.category;
+  Expense.create({
+    amount: amount,
+    description: description,
+    category:category
+  })
+  .then(() => {
+    res.redirect('/');
+  })
+  .catch((err) => {
+    console.log(err)
+  })
 };
 
 exports.postDeleteExpense = (req,res,next) => {
   const expenseid = req.body.expenseId;
-  console.log(expenseid);
-  Expense.deleteById(expenseid)
-  .then(() => {
+
+  Expense.findByPk(expenseid)
+  .then((expense) => {
+    expense.destroy();
     res.redirect('/');
   }) 
   .catch((err) => console.log(err));

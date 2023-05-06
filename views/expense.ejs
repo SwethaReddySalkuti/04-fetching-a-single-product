@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title><%= pageTitle %></title>
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="/css/product.css">
+    <link rel="stylesheet" href="/css/order.css">
     </head>
 
     <body>
@@ -16,7 +16,7 @@
     <nav class="main-header__nav">
         <ul class="main-header__item-list">
             <li class="main-header__item">
-                <a class="<%= path === '/' ? 'active' : '' %>" href="/">Restaurant App</a>
+                <a class="<%= path === '/' ? 'active' : '' %>" href="/">Expense App</a>
             </li>
             
             
@@ -27,87 +27,53 @@
 <nav class="mobile-nav">
         <ul class="mobile-nav__item-list">
                 <li class="mobile-nav__item">
-                    <a class="<%= path === '/' ? 'active' : '' %>" href="/">Order List</a>
+                    <a class="<%= path === '/' ? 'active' : '' %>" href="/">Expense List</a>
                 </li>
             
             </ul>
 </nav>
             <main>
-        <form class="product-form" action="/" method="POST">
+        <form class="order-form" action="/" method="POST">
             <div class="form-control">
-                <label for="amount">Choose Price</label>
+                <label for="amount">Amount : </label>
                 <input type="number" name="amount" id="amount">
             </div>
             <div class="form-control">
-                <label for="description">Choose Dish</label>
+                <label for="description">Description :</label>
                 <input type="text" name="description" id="description" rows="5" >
             </div>
             <div>
 
-            <label for="table">Choose a Table:</label>
-            <select name="table" id="table">
-                <option value="table1">Table 1</option>
-                <option value="table2">Table 2</option>
-                <option value="table3">Table 3</option>
+            <label for="category">Category :</label>
+            <select name="category" id="category">
+                <option value="movies">Movies</option>
+                <option value="transport">Transport</option>
+                <option value="grocery">Grocery</option>
             </select>
             </div>
-            <button class="btn" type="submit">Add Order </button>
+            <button class="btn" type="submit">Add Expense </button>
         </form>
     </main>
 
             <main>
                 <% if (expenses.length > 0) { %>
                     <div class="grid">
-                        <h4>Table 1 Orders :</h4>
-                        <% for (let expense of expenses) { %>
-                            <% if(expense.table==='table1') {%>
-
-                                <div>
+                        <% for (let expense of expenses) { %> 
+                            <div class="grid"> 
                                     <%= expense.amount %>
                                     <%= expense.description %>
-                                    <%= expense.table %>
+                                    <%= expense.category %>
                                     <form action="/delete-expense" method="POST">
                                         <input type="hidden" value="<%= expense.id %>" name="expenseId" id="expenseId">
                                         <button class="btn" type="submit">Delete</button>
                                     </form>
-                                </div>
-                                       
+                            </div>
+                            <br>
                                 <% } %>
-                                <% } %>
-                                <h4>Table 2 Orders :</h4>
-                                <% for (let expense of expenses) { %>
-                            <% if(expense.table==='table2') {%>
-                            
-                                <div>
-                                    <%= expense.amount %>
-                                    <%= expense.description %>
-                                    <%= expense.table %>
-                                    <form action="/delete-expense" method="POST">
-                                        <input type="hidden" value="<%= expense.id %>" name="expenseId" id="expenseId">
-                                        <button class="btn" type="submit">Delete</button>
-                                    </form>
-                                </div>
-                            <% } %>
-                            <% } %>
-                            <% for (let expense of expenses) { %>
-                            <% if(expense.table==='table3') {%>
-                                <h4>Table 3 Orders :</h4>
-                                <div>
-                                    <div>
-                                        <%= expense.amount %>
-                                        <%= expense.description %>
-                                        <%= expense.table %>
-                                        <form action="/delete-expense" method="POST">
-                                            <input type="hidden" value="<%= expense.id %>" name="expenseId" id="expenseId">
-                                            <button class="btn" type="submit">Delete</button>
-                                        </form>
-                                    </div>
-                                </div>
-                                <% } %>
-                            <% } %>
-                    </div>
+                           
+                                
                     <% } else { %>
-                        <h1>No Orders Found!</h1>
+                        <h1>No Expenses Found!</h1>
                         <% } %>
             </main>
         </body>
